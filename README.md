@@ -1,1 +1,0 @@
-# amplio_ar8bu3sa

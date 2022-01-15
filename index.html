@@ -15,7 +15,8 @@
                 speechRecognition.continuous = true;
                 speechRecognition.interimResults = false;
                 speechRecognition.lang = "en-US";
-
+         
+                speechRecognition.addEventListener('end', speechRecognition.start);
 
                 speechRecognition.onresult = (event) => {
                     let interim_transcript = "";

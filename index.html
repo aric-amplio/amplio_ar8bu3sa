@@ -13,7 +13,7 @@
                 let final_transcript = "";
 
                 speechRecognition.continuous = true;
-                speechRecognition.interimResults = true;
+                speechRecognition.interimResults = false;
                 speechRecognition.lang = "en-US";
 
 
@@ -21,13 +21,19 @@
                     let interim_transcript = "";
 
                     for (let i = event.resultIndex; i < event.results.length; ++i) {
-                    if (event.results[i].isFinal) {
-                        final_transcript += event.results[i][0].transcript;
-                    } else {
-                        interim_transcript += event.results[i][0].transcript;
-                    }
+                        if (event.results[i].isFinal) {
+                            final_transcript = event.results[i][0].transcript;
+                        } 
+                        // else {
+                        //     interim_transcript = event.results[i][0].transcript;
+                        // }
                     }
 
+                    if(final_transcript.toLowerCase().trim()=='panda'){
+                        //document.getElementById("final").setAttribute("text", "value", "OK!");
+                        document.getElementById("bowser-model").setAttribute("gltf-model","assets/asset.gltf");
+                        document.getElementById("bowser-model").setAttribute("scale","0.0025 0.0025 0.0025");
+                    }
                     //document.querySelector("#final").innerHTML = final_transcript;
                     document.getElementById("final").setAttribute("text", "value", final_transcript);
                     // document.querySelector("#interim").innerHTML = interim_transcript;
@@ -77,7 +83,8 @@
             </a-marker>
 
             <a-entity camera></a-entity>
-            <a-entity id="final" text="value: Hello World;" position="0 0 -1"></a-entity>
+            <a-entity id="final"  text="value: Hello World;color:blue;" position="0 0 -1"></a-entity>
         </a-scene>
+        
     </body>
 </html>

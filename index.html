@@ -43,9 +43,10 @@
 
                     //document.querySelector("#final").innerHTML = final_transcript;
                     if(final_transcript=="")
-                        document.getElementById("final").setAttribute("text", "value",interim_transcript);
+                        document.getElementById("final").value=interim_transcript;
+                        //document.getElementById("final").setAttribute("text", "value",interim_transcript);
                     else
-                        document.getElementById("final").setAttribute("text", "value", final_transcript);
+                        document.getElementById("final").value=final_transcript;
                     // document.querySelector("#interim").innerHTML = interim_transcript;
                 };
 
@@ -56,7 +57,7 @@
     </head>
 
     <body style="margin: 0; overflow: hidden;">
-        <a-scene
+        <a-scene 
             vr-mode-ui="enabled: false;"
             loading-screen="enabled: false;"
             renderer="logarithmicDepthBuffer: true;"
@@ -92,9 +93,25 @@
                 ></a-entity>
             </a-marker>
 
-            <a-entity camera></a-entity>
-            <a-entity id="final"  text="value: Hello World;color:blue;" position="0 0 -1"></a-entity>
+            
+            <a-entity camera>  </a-entity>
+            <!-- <a-entity id="final"  text="value: NAME THE IMAGE;color:blue;" position="0.4 0.25 -1"></a-entity> -->
+
+
         </a-scene>
-        
+
+
+            <input type="text"  id="final"  style="background-color: black;
+            color:yellow;
+            width: 300px;
+            height: 50px;
+            position: absolute;
+            left: 45%;
+            top:10px;
+            text-align:center;
+            font-size: x-large;"
+            
+            value="NAME THE IMAGE"/>
+
     </body>
 </html>

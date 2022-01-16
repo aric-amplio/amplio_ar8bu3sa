@@ -30,7 +30,7 @@
                         }
                     }
 
-                    if(final_transcript.toLowerCase().trim()=='panda' || interim_transcript.toLowerCase().trim()=='panda'){
+                    if(final_transcript.toLowerCase().trim()=='wolf' || interim_transcript.toLowerCase().trim()=='wolf'){
                         //document.getElementById("final").setAttribute("text", "value", "OK!");
                         document.getElementById("bowser-model").setAttribute("gltf-model","assets/icecream_l.glb");
                         document.getElementById("bowser-model").setAttribute("scale","0.0025 0.0025 0.0025");
@@ -38,7 +38,11 @@
                         final_transcript.toLowerCase().trim()=='ice cream' || interim_transcript.toLowerCase().trim()=='ice cream')
                     {
                         document.getElementById("bowser-model").setAttribute("gltf-model","assets/panda_l.glb");
-                        document.getElementById("bowser-model").setAttribute("scale","0.5 0.5 0.5");
+                        document.getElementById("bowser-model").setAttribute("scale","1.5 1.5 1.5");
+                    }else if(final_transcript.toLowerCase().trim()=='panda' || interim_transcript.toLowerCase().trim()=='panda'){
+                        //document.getElementById("final").setAttribute("text", "value", "OK!");
+                        document.getElementById("bowser-model").setAttribute("gltf-model","assets/wolf.gltf");
+                        document.getElementById("bowser-model").setAttribute("scale","2.5 2.5 2.5");
                     }
 
                     //document.querySelector("#final").innerHTML = final_transcript;
@@ -69,7 +73,7 @@
             <a-assets>
                 <a-asset-item
                     id="animated-asset"
-                    src="assets/panda_l.glb"
+                    src="assets/wolf.gltf"
                 ></a-asset-item>
             </a-assets>
 
@@ -85,7 +89,7 @@
             >
                 <a-entity
                     id="bowser-model"
-                    scale="0.5 0.5 0.5"
+                    scale="2.5 2.5 2.5"
                     animation-mixer="loop: repeat"
                     gltf-model="#animated-asset"
                     class="clickable"

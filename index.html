@@ -10,33 +10,42 @@
         <script>
             if ("webkitSpeechRecognition" in window) {
                 let speechRecognition = new webkitSpeechRecognition();
-                let final_transcript = "";
+                //let final_transcript = "";
 
                 speechRecognition.continuous = true;
-                speechRecognition.interimResults = false;
+                speechRecognition.interimResults = true;
                 speechRecognition.lang = "en-US";
-         
+
                 speechRecognition.addEventListener('end', () => speechRecognition.start());
 
                 speechRecognition.onresult = (event) => {
                     let interim_transcript = "";
-
+                    let final_transcript = "";
                     for (let i = event.resultIndex; i < event.results.length; ++i) {
                         if (event.results[i].isFinal) {
                             final_transcript = event.results[i][0].transcript;
                         } 
-                        // else {
-                        //     interim_transcript = event.results[i][0].transcript;
-                        // }
+                        else {
+                            interim_transcript = event.results[i][0].transcript;
+                        }
                     }
 
-                    if(final_transcript.toLowerCase().trim()=='panda'){
+                    if(final_transcript.toLowerCase().trim()=='panda' || interim_transcript.toLowerCase().trim()=='panda'){
                         //document.getElementById("final").setAttribute("text", "value", "OK!");
-                        document.getElementById("bowser-model").setAttribute("gltf-model","assets/asset.gltf");
+                        document.getElementById("bowser-model").setAttribute("gltf-model","assets/icecream_l.glb");
                         document.getElementById("bowser-model").setAttribute("scale","0.0025 0.0025 0.0025");
+                    }else if(final_transcript.toLowerCase().trim()=='icecream' || interim_transcript.toLowerCase().trim()=='icecream'||
+                        final_transcript.toLowerCase().trim()=='ice cream' || interim_transcript.toLowerCase().trim()=='ice cream')
+                    {
+                        document.getElementById("bowser-model").setAttribute("gltf-model","assets/panda_l.glb");
+                        document.getElementById("bowser-model").setAttribute("scale","0.5 0.5 0.5");
                     }
+
                     //document.querySelector("#final").innerHTML = final_transcript;
-                    document.getElementById("final").setAttribute("text", "value", final_transcript);
+                    if(final_transcript=="")
+                        document.getElementById("final").setAttribute("text", "value",interim_transcript);
+                    else
+                        document.getElementById("final").setAttribute("text", "value", final_transcript);
                     // document.querySelector("#interim").innerHTML = interim_transcript;
                 };
 
@@ -59,7 +68,7 @@
             <a-assets>
                 <a-asset-item
                     id="animated-asset"
-                    src="assets/asset.glb"
+                    src="assets/panda_l.glb"
                 ></a-asset-item>
             </a-assets>
 
@@ -75,7 +84,7 @@
             >
                 <a-entity
                     id="bowser-model"
-                    scale="3.1348454591021397 3.1348454591021397 3.1348454591021397"
+                    scale="0.5 0.5 0.5"
                     animation-mixer="loop: repeat"
                     gltf-model="#animated-asset"
                     class="clickable"

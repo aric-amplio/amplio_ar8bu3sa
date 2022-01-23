@@ -150,13 +150,17 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
             }
 
             function sayText(txt){
-                var synth = window.speechSynthesis;
-                var utterThis = new SpeechSynthesisUtterance(txt);
-                utterThis.voice =voices = synth.getVoices()[0];
-                utterThis.pitch = 1;
-                utterThis.rate = 1;
-                utterThis.lang = utterThis.voice.lang
-                synth.speak(utterThis); 
+                try{
+                    var synth = window.speechSynthesis;
+                    var utterThis = new SpeechSynthesisUtterance(txt);
+                    utterThis.voice =voices = synth.getVoices()[0];
+                    utterThis.pitch = 1;
+                    utterThis.rate = 1;
+                    utterThis.lang = utterThis.voice.lang
+                    synth.speak(utterThis); 
+                }catch(e){
+                    alert('err:' + e);
+                }
             }
 
             function sayHello(){

@@ -46,9 +46,9 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
             }
            
             startListening();
-            //var handler = function(e) {
-            //    speechRecognition.start();
-            //};
+            var handler = function(e) {
+                speechRecognition.start();
+            };
 
             function startListening(){
                 if ("webkitSpeechRecognition" in window) {

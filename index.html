@@ -8,15 +8,15 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
         <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
-        <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
+        <!--<script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>-->
 
         <script>
-            var speechRecognition = new webkitSpeechRecognition();
-            var saidHello = false;
-            var saidCongrats= false;
+            //var speechRecognition = new webkitSpeechRecognition();
+            //var saidHello = false;
+            //var saidCongrats= false;
             console.log('start');
-            var constraints = { audio: true, video: true };
-            var said = ['run','jump','dance','dead','punch','thumbs']
+            //var constraints = { audio: true, video: true };
+            //var said = ['run','jump','dance','dead','punch','thumbs']
             //navigator.mediaDevices.getUserMedia(constraints)
             //.then(function(mediaStream) {
             //    intiSpeech();
@@ -47,9 +47,9 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
             }
            
 
-            var handler = function(e) {
-                speechRecognition.start();
-            };
+            //var handler = function(e) {
+            //    speechRecognition.start();
+            //};
 
             function startListening(){
                 if ("webkitSpeechRecognition" in window) {
@@ -173,7 +173,7 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
     </head>
 
     <body style="margin: 0; overflow: hidden;">
-        <img id="confetti" src="confetti.gif" style="display: none;margin-left: auto;margin-right: auto;width:100%;position: absolute;z-index: 2;"/>
+        <!--<img id="confetti" src="confetti.gif" style="display: none;margin-left: auto;margin-right: auto;width:100%;position: absolute;z-index: 2;"/>-->
         <a-scene  id="a-scene" cursor="rayOrigin: mouse" arjs="debugUIEnabled: false" style="margin: 0; padding: 0; width: 100%; height: 100%; position: absolute;z-index: 1;">
               <!-- <a-assets>
                 <a-asset-item

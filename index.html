@@ -155,6 +155,7 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
                 utterThis.voice =voices = synth.getVoices()[0];
                 utterThis.pitch = 1;
                 utterThis.rate = 1;
+                utterThis.lang = utterThis.voice.lang
                 synth.speak(utterThis); 
             }
 

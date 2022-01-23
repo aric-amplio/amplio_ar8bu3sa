@@ -1,0 +1,239 @@
+<!-- AR.js by @jerome_etienne
+GitHub: https://github.com/jeromeetienne/ar.js -->
+<!doctype html>
+<html>
+    <head>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+        <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
+        <script src="https://unpkg.com/aframe-text-geometry-component@^0.5.0/dist/aframe-text-geometry-component.min.js"></script>
+
+        <script>
+            var speechRecognition = new webkitSpeechRecognition();
+            var saidHello = false;
+            var saidCongrats= false;
+            console.log('start');
+            var constraints = { audio: true, video: true };
+            var said = ['run','jump','dance','dead','punch','thumbs']
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then(function(mediaStream) {
+                intiSpeech();
+                return false;  
+            })
+
+
+            function intiSpeech(){
+                //arController = document.getElementById("a-scene").systems.arjs._arSession.arContext.arController;
+                //arController.addEventListener("getMarker",wrapSayHello,true);
+                document.getElementById("anchor").addEventListener("markerFound", (e)=>{ 
+                    if(!saidHello){
+                        saidHello =true;
+                        setTimeout(function() { sayHello(); }, 500);
+                    }
+                    return false;  
+                });
+                return false; 
+            }
+
+            function removeArrVal(val){
+                var myIndex = said.indexOf(val);
+                if (myIndex !== -1) 
+                    said.splice(myIndex, 1);
+
+                setTimeout(function() { document.getElementById('confetti').setAttribute('style','display:;margin-left: auto;margin-right: auto;width:100%;position: absolute;z-index: 2;');},2500);
+                setTimeout(function() { document.getElementById('confetti').setAttribute('style','display: none;margin-left: auto;margin-right: auto;width:100%;position: absolute;z-index: 2;'); }, 3000);
+            }
+           
+
+            var handler = function(e) {
+                speechRecognition.start();
+            };
+
+            function startListening(){
+                if ("webkitSpeechRecognition" in window) {
+                    speechRecognition.continuous = true;
+                    speechRecognition.interimResults = true;
+                    speechRecognition.lang = "en-US";
+                    speechRecognition.setS
+                    tempTranscript =[];
+                    speechRecognition.addEventListener('end', handler);
+
+                    speechRecognition.onresult = (event) => {
+                        let interim_transcript = "";
+                        let final_transcript = "";
+                        for (let i = event.resultIndex; i < event.results.length; ++i) {
+                            if (event.results[i].isFinal) {
+                                final_transcript = event.results[i][0].transcript;
+                            } 
+                            else {
+                                interim_transcript = event.results[i][0].transcript;
+                            }
+                        }
+
+                        if(final_transcript.toLowerCase().trim()=='jump' || interim_transcript.toLowerCase().trim()=='jump'){
+                            console.log('jumping');
+                            removeArrVal('jump');
+                            document.getElementById('bowser-model').setAttribute("animation-mixer","clip: Jump; loop: repeat; loop: repeat; crossFadeDuration: 0.5");
+                            setTimeout(function() { goSit(); }, 3000);
+                            document.getElementById('jump').setAttribute('visible','false');
+                        }else if(final_transcript.toLowerCase().trim()=='dance for me' || interim_transcript.toLowerCase().trim()=='dance for me'){
+                            console.log('dancing');
+                            removeArrVal('dance');
+                            document.getElementById('bowser-model').setAttribute("animation-mixer","clip: Dance; loop: repeat; loop: repeat; crossFadeDuration: 0.5");
+                            setTimeout(function() { goSit(); }, 3000);
+                            document.getElementById('dance').setAttribute('visible','false');
+                        }else if(final_transcript.toLowerCase().trim()=='play dead' || interim_transcript.toLowerCase().trim()=='play dead'){
+                            removeArrVal('dead');
+                            document.getElementById('bowser-model').setAttribute("animation-mixer","clip: Death; loop: repeat; loop: repeat; crossFadeDuration: 0.5");
+                            setTimeout(function() { goSit(); }, 3000);
+                            document.getElementById('dead').setAttribute('visible','false');
+                        }else if(final_transcript.toLowerCase().trim()=='throw a punch' || interim_transcript.toLowerCase().trim()=='throw a punch'){
+                            removeArrVal('punch');
+                            document.getElementById('bowser-model').setAttribute("animation-mixer","clip: Punch; loop: repeat; loop: repeat; crossFadeDuration: 0.5");
+                            setTimeout(function() { goSit(); }, 3000);
+                            document.getElementById('punch').setAttribute('visible','false');
+                        }else if(final_transcript.toLowerCase().trim()=='start running' || interim_transcript.toLowerCase().trim()=='start running'){
+                            removeArrVal('run');
+                            document.getElementById('bowser-model').setAttribute("animation-mixer","clip: Running; loop: repeat; loop: repeat; crossFadeDuration: 0.5");
+                            setTimeout(function() { goSit(); }, 3000);
+                            document.getElementById('run').setAttribute('visible','false');
+                        }else if(final_transcript.toLowerCase().trim()=='thumbsup' || interim_transcript.toLowerCase().trim()=='thumbsup' || 
+                                    final_transcript.toLowerCase().trim()=='thumbs up' || interim_transcript.toLowerCase().trim()=='thumbs up'){
+                            removeArrVal('thumbs');
+                            document.getElementById('bowser-model').setAttribute("animation-mixer","clip: ThumbsUp; loop: repeat; loop: repeat; crossFadeDuration: 0.5");
+                            setTimeout(function() { goSit(); }, 3000);
+                            document.getElementById('thumbs').setAttribute('visible','false');
+                        }else{
+                            document.getElementById('bowser-model').setAttribute("animation-mixer","clip: none;");
+                            setTimeout(function() { goSit(); }, 3000);
+                        }
+
+
+                        //document.querySelector("#final").innerHTML = final_transcript;
+                        if(final_transcript==""){
+                            console.log(interim_transcript);
+                            var wArray = interim_transcript.trim().split(' ');
+                            for (let i = 0; i < wArray.length; i++) {
+                                if(!tempTranscript.includes(wArray[i]))
+                                    tempTranscript.push(wArray[i]);
+                            };
+                            
+                            transcript = tempTranscript.join(' ');
+                            tempTranscript =[];
+                            wArray= [];
+                            interim_transcript=''
+                            document.getElementById("dispTxt").setAttribute("text-geometry", "value",transcript);
+                        }
+                        else{
+                            tempTranscript =[];
+                            wArray= [];
+                            interim_transcript='';
+                            transcript='';
+                            document.getElementById("dispTxt").setAttribute("text-geometry", "value",  final_transcript);
+                        }
+                        // document.querySelector("#interim").innerHTML = interim_transcript;
+
+                        if(said.length==0 && !saidCongrats){
+                            speechRecognition.removeEventListener('end', handler);
+                            speechRecognition.stop();
+
+                            saidCongrats = true;
+                            console.log('session ended')
+                            sayText('Congratulations, a job well done');
+                        }
+                    };
+
+                    speechRecognition.start();
+                }
+            }
+
+            function goSit(){
+                document.getElementById('bowser-model').setAttribute("animation-mixer","clip: none;");
+            }
+
+            function sayText(txt){
+                var synth = window.speechSynthesis;
+                var utterThis = new SpeechSynthesisUtterance(txt);
+                utterThis.voice =voices = synth.getVoices()[0];
+                utterThis.pitch = 1;
+                utterThis.rate = 1;
+                synth.speak(utterThis); 
+            }
+
+            function sayHello(){
+                sayText('Good morning Guy, Please tell me what to do now');
+                setTimeout(function() { startListening(); }, 1000);
+                
+            }
+
+
+            // window.onload = function () {
+            //     document
+            //     .querySelector(".say-hi-button")
+            //     .addEventListener("click", function () {
+            //         document.getElementById('bowser-model').setAttribute("animation-mixer","clip: Jump; loop: repeat; crossFadeDuration: 0.4");
+            //     });
+            // };
+        </script>
+    </head>
+
+    <body style="margin: 0; overflow: hidden;">
+        <img id="confetti" src="confetti.gif" style="display: none;margin-left: auto;margin-right: auto;width:100%;position: absolute;z-index: 2;"/>
+        <a-scene  id="a-scene" cursor="rayOrigin: mouse" arjs="debugUIEnabled: false" style="margin: 0; padding: 0; width: 100%; height: 100%; position: absolute;z-index: 1;">
+            <a-assets>
+                <a-asset-item
+                    id="animated-asset"
+                    src="https://raw.githubusercontent.com/aric-amplio/amplio_ar8bu3sa/gh-pages/assets/RobotExpressive.glb"
+                ></a-asset-item>
+                <a-asset-item id="optimerBoldFont" src="https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-asset-item>
+            </a-assets>
+           
+            <a-marker preset="hiro" id="anchor"> 
+                <a-entity 
+                   id="bowser-model"
+                    scale="0.5 0.5 0.5"
+                    gltf-morph__run="morphtarget: Surprised; value: 0"
+                    animation-mixer="clip: sitting; loop: repeat; crossFadeDuration: 0.4;timeScale:0.5;"
+                    animation="
+                    property: gltf-morph__run.value;
+                    from: 0 0 0;
+                    to:  0 1 1;
+                    loop: repeat;
+                    dir: alternate;
+                    easing: easeInOutQuad;"
+                    morph-target-drag
+                    position="0 0 0"
+                    shadow
+                    gltf-model="#animated-asset"
+                    class="say-hi-button"
+                    gesture-handler  opacity="0.5"
+                    event-set__mouseenter="color: red"
+                    event-set__mouseleave="color: white"
+                    event-set__mousedown="color: green"
+                    event-set__mouseup="color: red">
+                </a-entity> 
+                <a-plane color="white" rotation="-90 0 0" position="0 -0.25 0" height="5" width="7" material="transparent: true; opacity: 0.90" geometry=""></a-plane>
+                <a-entity id="thumbs" material="color: red"  text-geometry="value: ThumbsUp; size:0.2;" rotation="-75 0 0" position="-2.5 0 2.2"></a-entity> 
+                <a-entity id="run" material="color: red"  text-geometry="value: Start Running; size:0.2;" rotation="-75 0 0" position="-2.5 0 1.6"></a-entity> 
+                <a-entity id= "punch" material="color: red"  text-geometry="value: Throw a Punch; size:0.2;" rotation="-75 0 0" position="-2.5 0 0.8"></a-entity>     
+                <a-entity id= "jump" material="color: red"  text-geometry="value: Jump; size:0.2;" rotation="-75 0 0" position="-2.5 0 0"></a-entity>
+                <a-entity id= "dance" material="color: red"  text-geometry="value: Dance For Me; size:0.2;" rotation="-75 0 0" position="-2.5 0 -0.8"></a-entity>
+                <a-entity id= "dead" material="color: red"  text-geometry="value: Play Dead; size:0.2;" rotation="-75 0 0" position="-2.5 0 -1.6"></a-entity>
+                <!-- <a-entity text-geometry="value: Dog?; font: #optimerBoldFont"></a-entity> -->
+                
+ß
+                <!-- <a-entity
+            rotation="-90 0 0"
+            geometry="primitive: plane; width: 4; height: auto"
+            material="color: blue"
+            text="value: Alexender Statue\n Alexandria"></a-entity> -->
+                <a-entity id="dispTxt" material="color: blue"  text-geometry="value: ; size:0.2;" rotation="-75 0 0" position="-0.6 0 1.2"></a-entity>
+            </a-marker>
+            <a-entity camera>
+            </a-entity>
+        </a-scene>
+    </body>
+</html>
+    

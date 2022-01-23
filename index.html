@@ -17,12 +17,13 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
             console.log('start');
             var constraints = { audio: true, video: true };
             var said = ['run','jump','dance','dead','punch','thumbs']
-            navigator.mediaDevices.getUserMedia(constraints)
-            .then(function(mediaStream) {
-                //intiSpeech();
-                return false;  
-            })
+            //navigator.mediaDevices.getUserMedia(constraints)
+            //.then(function(mediaStream) {
+            //    intiSpeech();
+            //    return false;  
+            //})
 
+            startListening();
 
             function intiSpeech(){
                 //arController = document.getElementById("a-scene").systems.arjs._arSession.arContext.arController;
@@ -47,9 +48,9 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
             }
            
 
-            var handler = function(e) {
-                speechRecognition.start();
-            };
+            //var handler = function(e) {
+            //    speechRecognition.start();
+            //};
 
             function startListening(){
                 if ("webkitSpeechRecognition" in window) {

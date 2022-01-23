@@ -14,14 +14,14 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
             var speechRecognition = new webkitSpeechRecognition();
             var saidHello = false;
             var saidCongrats= false;
-            alert('start');
+            alert('start1');
             var constraints = { audio: true, video: true };
             var said = ['run','jump','dance','dead','punch','thumbs']
-            navigator.mediaDevices.getUserMedia(constraints)
-            .then(function(mediaStream) {
-                intiSpeech();
-                return false;  
-            })
+            //navigator.mediaDevices.getUserMedia(constraints)
+            //.then(function(mediaStream) {
+            //    intiSpeech();
+            //    return false;  
+            //})
 
             function intiSpeech(){
                 //arController = document.getElementById("a-scene").systems.arjs._arSession.arContext.arController;
@@ -45,7 +45,7 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
                 //setTimeout(function() { document.getElementById('confetti').setAttribute('style','display: none;margin-left: auto;margin-right: auto;width:100%;position: absolute;z-index: 2;'); }, 3000);
             }
            
-
+            startListening();
             //var handler = function(e) {
             //    speechRecognition.start();
             //};
@@ -165,7 +165,7 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
 
             function sayHello(){
                 sayText('Good morning Guy, Please tell me what to do now');
-                //setTimeout(function() { startListening(); }, 1000);
+                setTimeout(function() { startListening(); }, 1000);
                 
             }
 

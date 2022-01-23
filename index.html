@@ -17,13 +17,11 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
             console.log('start');
             var constraints = { audio: true, video: true };
             var said = ['run','jump','dance','dead','punch','thumbs']
-            //navigator.mediaDevices.getUserMedia(constraints)
-            //.then(function(mediaStream) {
-            //    intiSpeech();
-            //    return false;  
-            //})
-
-            //startListening();
+            navigator.mediaDevices.getUserMedia(constraints)
+            .then(function(mediaStream) {
+                intiSpeech();
+                return false;  
+            })
 
             function intiSpeech(){
                 //arController = document.getElementById("a-scene").systems.arjs._arSession.arContext.arController;
@@ -162,7 +160,7 @@ GitHub: https://github.com/jeromeetienne/ar.js -->
 
             function sayHello(){
                 sayText('Good morning Guy, Please tell me what to do now');
-                setTimeout(function() { startListening(); }, 1000);
+                //setTimeout(function() { startListening(); }, 1000);
                 
             }
 
